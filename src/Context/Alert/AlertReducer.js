@@ -1,15 +1,4 @@
-import {ADD_ALARM, DISABLE_ALL_ALARMS, ENABLE_ALL_ALARMS, REMOVE_ALARM, TOGGLE_ALARM} from "../types"
-//
-// const handlers = {
-//   // [ADD_ALARM]: (state, action) => ({...state, alarmAt: action.payload}),
-//   [SHOW_ALERT]: (state, action) => ({...state, alarms: [...state.alarms, {alarmAt: action.payload}]}),
-//   DEFAULT: state => state
-// }
-//
-// export const AlertReducer = (state, action) => {
-//   const handler = handlers[action.type] || handlers.DEFAULT
-//   return handler(state, action)
-// }
+import {ADD_ALARM, CHANGE_ALARM, DISABLE_ALL_ALARMS, ENABLE_ALL_ALARMS, REMOVE_ALARM, TOGGLE_ALARM} from "../types"
 
 export default function(state, action) {
   switch (action.type) {
@@ -18,7 +7,9 @@ export default function(state, action) {
         ...state,
         {
           id: Date.now(),
-          alarmAt: action.payload,
+          alarmAtHour: action.hours,
+          alarmAtMinute: action.minutes,
+          days: {sunday: action.sunday, monday: action.monday, tuesday: action.tuesday, wednesday: action.wednesday, thursday: action.thursday, friday: action.friday, saturday: action.saturday},
           willWork: false
         }
       ]
@@ -43,6 +34,21 @@ export default function(state, action) {
         alarm.willWork = true
         return alarm
       })
+    case CHANGE_ALARM:
+      const item = state.find(alarm => {
+        return alarm.id === +action.payload
+      })
+      item.alarmAtHour = action.hours
+      item.alarmAtMinute = action.minutes
+      item.days.sunday = action.sunday
+      item.days.monday = action.monday
+      item.days.tuesday = action.tuesday
+      item.days.wednesday = action.wednesday
+      item.days.thursday = action.thursday
+      item.days.friday = action.friday
+      item.days.saturday = action.saturday
+      localStorage.setItem('alarms', JSON.stringify(state))
+      return state
     default:
       return state
   }

@@ -48,13 +48,69 @@
 }
 
 .Button {
-  position: absolute !important;
-  bottom: 40px;
+  position: sticky;
+  bottom: 0px;
   right: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 20px 20px 20px auto;
   padding: 15px;
   font-size: 16px;
   border-radius: 50%;
+}
+
+.alarm_time {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.alarm_time p {
+  margin: 0 20px 0 0;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.alarm_time span {
+  margin: 0 5px;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.alarm_time input {
+  width: 55px;
+  padding: 10px;
+  font-size: 25px;
+  font-weight: 600;
+  border-radius: 5px;
+  background: none;
+  border: none;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+
+.alarm_days {
+  display: flex;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.alarm_day_label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  padding: 10px;
+  border: 2px solid #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.alarm_day_checkbox:checked ~ .alarm_day_label {
+  color: #ffffff;
+  background-color: #007bff;
 }

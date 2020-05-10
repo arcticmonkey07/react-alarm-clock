@@ -65,3 +65,26 @@
 .delete_icon:hover {
   opacity: 1;
 }
+
+.fall {
+  transform: translateY(0px) rotateZ(0deg);
+  opacity: 1;
+  animation: fall 0.6s ease-out forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(120px) rotateZ(20deg);
+    opacity: 0;
+  }
+}
+
+.alarm_list {
+  display: flex;
+  padding: 0;
+  list-style: none;
+}
+
+.alarm_list li {
+  margin-right: 8px;
+}

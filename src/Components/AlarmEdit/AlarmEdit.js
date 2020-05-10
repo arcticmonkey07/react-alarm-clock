@@ -6,7 +6,7 @@ export const AlarmEdit = ({alarms}) => {
   let { id } = useParams()
 
   const alarmsRender = () => {
-   const alarm = alarms.filter(alarm => {
+   const alarm = alarms.find(alarm => {
       return alarm.id === +id
     })
     return alarm

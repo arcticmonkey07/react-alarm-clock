@@ -9,6 +9,8 @@ import {Button, Modal} from "react-bootstrap";
 
 export const Alarms = ({alarms}) => {
 
+  console.log(alarms)
+
   const {dispatch} = useContext(AlertContext)
 
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
@@ -19,15 +21,35 @@ export const Alarms = ({alarms}) => {
 
   const [hours, setHours] = useState('')
   const [minutes, setMinutes] = useState('')
-  const time = hours + ':' + minutes
+
+  const [sunday, setSunday] = useState(false)
+  const [monday, setMonday] = useState(false)
+  const [tuesday, setTuesday] = useState(false)
+  const [wednesday, setWednesday] = useState(false)
+  const [thursday, setThursday] = useState(false)
+  const [friday, setFriday] = useState(false)
+  const [saturday, setSaturday] = useState(false)
 
   const addAlarm = () => {
-    dispatch({
-      type: 'ADD_ALARM',
-      payload: time
-    })
-    setHours('')
-    setMinutes('')
+    if (hours <= 23 && minutes <= 59) {
+      dispatch({
+        type: 'ADD_ALARM',
+        hours: hours,
+        minutes: minutes,
+        sunday: sunday,
+        monday: monday,
+        tuesday: tuesday,
+        wednesday: wednesday,
+        thursday: thursday,
+        friday: friday,
+        saturday: saturday
+      })
+      setHours('')
+      setMinutes('')
+      handleClose()
+    } else {
+      alert('Enter true numbers')
+    }
   }
 
   return (
@@ -101,25 +123,59 @@ export const Alarms = ({alarms}) => {
           <Modal.Title>Add Time</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input
-            type="tel"
-            value={hours}
-            onChange={event => setHours(event.target.value)}
-            maxLength='2'
-          />
-          <span>:</span>
-          <input
-            type="tel"
-            value={minutes}
-            onChange={event => setMinutes(event.target.value)}
-            maxLength='2'
-          />
+          <div className={classes.alarm_time}>
+            <p>Time:</p>
+            <input
+              type="tel"
+              value={hours}
+              onChange={event => setHours(event.target.value)}
+              maxLength='2'
+              pattern='[0-12]'
+            />
+            <span>:</span>
+            <input
+              type="tel"
+              value={minutes}
+              onChange={event => setMinutes(event.target.value)}
+              maxLength='2'
+            />
+          </div>
+          <div className={classes.alarm_days}>
+            <div>
+              <input type="checkbox" id='sunday' className={`${classes.alarm_day_checkbox} visually-hidden`} name='sunday' checked={sunday} onChange={() => {setSunday(!sunday)}} />
+              <label className={classes.alarm_day_label} htmlFor="sunday">Sun</label>
+            </div>
+            <div>
+              <input type="checkbox" id='monday' className={`${classes.alarm_day_checkbox} visually-hidden`} name='monday' checked={monday} onChange={() => {setMonday(!monday)}} />
+              <label className={classes.alarm_day_label} htmlFor="monday">Mon</label>
+            </div>
+            <div>
+              <input type="checkbox" id='tuesday' className={`${classes.alarm_day_checkbox} visually-hidden`} name='tuesday' checked={tuesday} onChange={() => {setTuesday(!tuesday)}} />
+              <label className={classes.alarm_day_label} htmlFor="tuesday">Tue</label>
+            </div>
+            <div>
+              <input type="checkbox" id='wednesday' className={`${classes.alarm_day_checkbox} visually-hidden`} name='wednesday' checked={wednesday} onChange={() => {setWednesday(!wednesday)}} />
+              <label className={classes.alarm_day_label} htmlFor="wednesday">Wed</label>
+            </div>
+            <div>
+              <input type="checkbox" id='thursday' className={`${classes.alarm_day_checkbox} visually-hidden`} name='thursday' checked={thursday} onChange={() => {setThursday(!thursday)}} />
+              <label className={classes.alarm_day_label} htmlFor="thursday">Thu</label>
+            </div>
+            <div>
+              <input type="checkbox" id='friday' className={`${classes.alarm_day_checkbox} visually-hidden`} name='friday' checked={friday} onChange={() => {setFriday(!friday)}} />
+              <label className={classes.alarm_day_label} htmlFor="friday">Fri</label>
+            </div>
+            <div>
+              <input type="checkbox" id='saturday' className={`${classes.alarm_day_checkbox} visually-hidden`} name='saturday' checked={saturday} onChange={() => {setSaturday(!saturday)}} />
+              <label className={classes.alarm_day_label} htmlFor="saturday">Sat</label>
+            </div>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => {addAlarm(); handleClose();} }>
+          <Button type='submit' variant="primary" onClick={() => {addAlarm()} }>
             Add Alarm
           </Button>
         </Modal.Footer>
