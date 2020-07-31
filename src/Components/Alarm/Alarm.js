@@ -35,6 +35,9 @@ export const Alarm = ({alarmAtHour, alarmAtMinute, days, id, willWork}) => {
     return arrDays
   }
 
+  // var date = new Date();
+  // console.log(typeof String(date.getMinutes()));
+
   return (
       <li className={`
         ${classes.alarm_item}
